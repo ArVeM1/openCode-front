@@ -10,7 +10,7 @@ import VectorSource from "ol/source/Vector";
 import VectorLayer from "ol/layer/Vector";
 import {Draw} from "ol/interaction";
 import {useDispatch} from "react-redux";
-import {addStatement, editStatement} from "../../redux/slices/statements";
+import {editStatement} from "../../redux/slices/statements";
 
 const UpdateModal = ({open, handleClose, data}) => {
     const [address, setAddress] = React.useState(data.address);

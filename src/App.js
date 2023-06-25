@@ -11,11 +11,11 @@ function App() {
             <Header/>
             <Container maxWidth="md" className="home-container">
                 <Routes>
-                    <Route path={"/"} element={<Home/>}/>
                     <Route path={"/statement/*"} element={<Journal/>}/>
                 </Routes>
             </Container>
             <Routes>
+                <Route path={"/"} element={<Home/>}/>
                 <Route path={"/map"} element={<MapPage/>}/>
                 <Route path={"/map/:x/:y/:zoom"} element={<MapPage/>}/>
             </Routes>

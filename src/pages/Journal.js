@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link, Route, Routes, useNavigate} from "react-router-dom";
+import {Route, Routes, useNavigate} from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Input from "../components/Input";
 import ItemList from "../components/ItemList";

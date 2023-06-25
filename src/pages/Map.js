@@ -85,19 +85,13 @@ const MapPage = (props) => {
 
                 overlay.setPosition(clickCoordinate);
 
-                addressElem.textContent = feature.get("address");
-                nameElem.textContent = feature.get("applicant");
-                avariaElem.textContent = accidentName;
-                phoneElem.textContent = feature.get("phoneNumber");
+                addressElem.textContent = feature.get("address") || "Не указан";
+                nameElem.textContent = feature.get("applicant") || "Не указан";
+                avariaElem.textContent = accidentName || "Не указан";
+                phoneElem.textContent = feature.get("phoneNumber") || "Не указан";
                 priorityElem.textContent = priorityName;
             })
         })
-
-        // map.on('moveend', (e) => {
-        //     map.forEachFeatureAtPixel(e.pixel, (feature, layer) => {
-        //         overlay.setPosition(undefined);
-        //     })
-        // })
 
         return () => {
             map.setTarget(null);
