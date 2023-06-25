@@ -20,6 +20,8 @@ const CreateModal = ({open, handleClose}) => {
     const [accidentType, setAccidentType] = React.useState('');
     const [applicant, setApplicant] = React.useState('');
 
+    const [validated, setValidated] = React.useState(false);
+
     const dispatch = useDispatch();
 
     const mapElement = React.useRef(null);
@@ -62,25 +64,30 @@ const CreateModal = ({open, handleClose}) => {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        const newStatement = {
-            id: Date.now(),
-            address,
-            location,
-            accidentType,
-            priority,
-            applicant,
-            phoneNumber
-        };
+        const form = e.currentTarget;
+        if (form.checkValidity() === true && location) {
+            const newStatement = {
+                id: Date.now(),
+                address,
+                location,
+                accidentType,
+                priority,
+                applicant,
+                phoneNumber
+            };
 
-        dispatch(addStatement(newStatement));
+            dispatch(addStatement(newStatement));
 
-        setAddress('');
-        setLocation(null);
-        setPriority('');
-        setPhoneNumber('');
-        setAccidentType('');
-        setApplicant('');
-        handleClose();
+            setAddress('');
+            setLocation(null);
+            setPriority('');
+            setPhoneNumber('');
+            setAccidentType('');
+            setApplicant('');
+            handleClose();
+        }
+
+        setValidated(true);
     }
 
     return (
@@ -97,14 +104,15 @@ const CreateModal = ({open, handleClose}) => {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <Form>
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form noValidate={validated} onSubmit={onSubmit}>
+                    <Form.Group className="mb-3" controlId="formAddress">
                         <Form.Label>Адрес</Form.Label>
                         <Form.Control
                             value={address}
                             onChange={(e) => setAddress(e.target.value)}
                             type="text"
                             placeholder="Введите адрес"
+                            required
                         />
                     </Form.Group>
 
@@ -121,6 +129,7 @@ const CreateModal = ({open, handleClose}) => {
                         <Form.Control
                             as="select"
                             value={accidentType}
+                            required
                             onChange={(e) => setAccidentType(e.target.value)}
                         >
                             <option>Выбери тип аварии</option>
@@ -138,6 +147,7 @@ const CreateModal = ({open, handleClose}) => {
                         <Form.Control
                             as="select"
                             value={priority}
+                            required
                             onChange={(e) => setPriority(e.target.value)}
                         >
                             <option>Выбери приоритет</option>
@@ -154,6 +164,7 @@ const CreateModal = ({open, handleClose}) => {
                             type="text"
                             placeholder="Введите имя"
                             value={applicant}
+                            required
                             onChange={(e) => setApplicant(e.target.value)}
                         />
                     </Form.Group>
@@ -164,11 +175,12 @@ const CreateModal = ({open, handleClose}) => {
                             type="text"
                             placeholder="Введите номер телефона"
                             value={phoneNumber}
+                            required
                             onChange={(e) => setPhoneNumber(e.target.value)}
                         />
                     </Form.Group>
 
-                    <Button variant="primary" type="submit" onClick={onSubmit}>
+                    <Button variant="primary" type="submit">
                         Submit
                     </Button>
                 </Form>
