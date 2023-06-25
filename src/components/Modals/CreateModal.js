@@ -87,6 +87,9 @@ const CreateModal = ({open, handleClose}) => {
             handleClose();
         }
 
+        if (location == null) {
+            alert("Не задудьте выбрать локацию");
+        }
         setValidated(true);
     }
 
