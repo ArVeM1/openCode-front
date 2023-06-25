@@ -27,8 +27,10 @@ a:hover {
 }
 
 .map {
+  position: absolute;
+  top: 74px;
   width: 100%;
-  height: 800px;
+  height: 100vh;
 }
 
 .tabs {

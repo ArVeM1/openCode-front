@@ -19,7 +19,6 @@ const CreateModal = ({open, handleClose}) => {
     const [phoneNumber, setPhoneNumber] = React.useState('');
     const [accidentType, setAccidentType] = React.useState('');
     const [applicant, setApplicant] = React.useState('');
-    const [map, setMap] = React.useState(null);
 
     const dispatch = useDispatch();
 
@@ -36,18 +35,17 @@ const CreateModal = ({open, handleClose}) => {
                 view: new View({
                     center: fromLonLat([39.683536334334974, 47.22365071826664]),
                     zoom: 12,
-                    minZoom: 9
                 }),
             });
 
-            const vectorSource = new VectorSource();
-            const vectorLayer = new VectorLayer({
-                source: vectorSource,
+            const source = new VectorSource();
+            const layer = new VectorLayer({
+                source: source,
             });
-            map.addLayer(vectorLayer);
+            map.addLayer(layer);
 
             const draw = new Draw({
-                source: vectorSource,
+                source: source,
                 type: 'Point',
             });
             map.addInteraction(draw);
@@ -59,8 +57,6 @@ const CreateModal = ({open, handleClose}) => {
                 const lonLat = toLonLat(point);
                 setLocation(lonLat);
             });
-
-            setMap(map);
         }
     }, [open]);
 

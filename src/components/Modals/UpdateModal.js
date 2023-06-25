@@ -11,6 +11,12 @@ import VectorLayer from "ol/layer/Vector";
 import {Draw} from "ol/interaction";
 import {useDispatch} from "react-redux";
 import {editStatement} from "../../redux/slices/statements";
+import {Fill, Stroke, Style} from "ol/style";
+import CircleStyle from "ol/style/Circle";
+import {getColorByPriority} from "../../utils/getName";
+import {Feature} from "ol";
+import {Point} from "ol/geom";
+import {useLocation} from "react-router-dom";
 
 const UpdateModal = ({open, handleClose, data}) => {
     const [address, setAddress] = React.useState(data.address);
@@ -19,7 +25,7 @@ const UpdateModal = ({open, handleClose, data}) => {
     const [phoneNumber, setPhoneNumber] = React.useState(data.phoneNumber);
     const [accidentType, setAccidentType] = React.useState(data.accidentType);
     const [applicant, setApplicant] = React.useState(data.applicant);
-    const [map, setMap] = React.useState(null);
+    const url = useLocation();
 
     const dispatch = useDispatch();
 
@@ -36,11 +42,30 @@ const UpdateModal = ({open, handleClose, data}) => {
                 view: new View({
                     center: fromLonLat([39.683536334334974, 47.22365071826664]),
                     zoom: 12,
-                    minZoom: 9
                 }),
             });
 
-            const vectorSource = new VectorSource();
+            if (data.location == null) return null;
+            const markerStyle = new Style({
+                image: new CircleStyle({
+                    radius: 8,
+                    fill: new Fill({color: getColorByPriority(data.priority)}),
+                    stroke: new Stroke({
+                        color: '#fff',
+                        width: 2,
+                    }),
+                }),
+            });
+
+            const markerFeature = new Feature({
+                geometry: new Point(fromLonLat([data.location[0], data.location[1]])),
+            });
+
+            markerFeature.setStyle(markerStyle);
+
+            const vectorSource = new VectorSource({
+                features: [markerFeature]
+            });
             const vectorLayer = new VectorLayer({
                 source: vectorSource,
             });
@@ -52,7 +77,6 @@ const UpdateModal = ({open, handleClose, data}) => {
             });
             map.addInteraction(draw);
 
-
             draw.on('drawend', (event) => {
                 const feature = event.feature;
                 const point = feature.getGeometry().getCoordinates();
@@ -60,7 +84,6 @@ const UpdateModal = ({open, handleClose, data}) => {
                 setLocation(lonLat);
             });
 
-            setMap(map);
         }
     }, [open]);
 
@@ -83,7 +106,7 @@ const UpdateModal = ({open, handleClose, data}) => {
 
     return (
         <Modal
-            show={open}
+            show={url.pathname || open}
             onHide={handleClose}
             aria-labelledby="modal-modal-title"
             size={"xl"}

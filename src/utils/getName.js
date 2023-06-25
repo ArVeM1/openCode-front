@@ -35,12 +35,14 @@ export function getPriority(number) {
 export const getColorByPriority = (priority) => {
     switch (priority) {
         case '1':
-            return "#ffa500"
+            return "#ffa500";
         case '2':
-            return  "#f00"
+            return  "#f00";
         case '3':
-            return "#00f"
+            return "#00f";
         case '4':
-            return "#0f0"
+            return "#0f0";
+        default:
+            return "#000";
     }
 };

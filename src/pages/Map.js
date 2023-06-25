@@ -20,7 +20,6 @@ const MapPage = (props) => {
     const mapRef = useRef(null);
     const {statements} = useSelector(state => state.statement)
     const param = useParams()
-    console.log(param)
 
     useEffect(() => {
         const map = new Map({
@@ -97,8 +96,6 @@ const MapPage = (props) => {
             map.setTarget(null);
         };
     }, []);
-
-    var domDivElement = document.createElement('div');
 
     return (
         <>

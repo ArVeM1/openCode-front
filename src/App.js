@@ -15,7 +15,7 @@ function App() {
                 </Routes>
             </Container>
             <Routes>
-                <Route path={"/"} element={<Home/>}/>
+                <Route path={"/*"} element={<Home/>}/>
                 <Route path={"/map"} element={<MapPage/>}/>
                 <Route path={"/map/:x/:y/:zoom"} element={<MapPage/>}/>
             </Routes>

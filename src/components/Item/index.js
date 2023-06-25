@@ -45,10 +45,10 @@ const Item = ({data}) => {
             <Routes>
                 <Route path={`/${data.id}`} element={
                     <UpdateModal
-                    handleClose={handleClose}
-                    open={open}
-                    data={data}
-                />} />
+                        handleClose={handleClose}
+                        open={open}
+                        data={data}
+                    />}/>
             </Routes>
         </>
     );
