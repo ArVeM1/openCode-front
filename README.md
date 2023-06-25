@@ -4,6 +4,7 @@
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+https://open-code-front.vercel.app/
 
 ### Технологии:
 1) React
@@ -42,4 +43,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
  - Синий - Средний
  - Зеленый - Низкий
 4) Карта по дефолту отображает Ростов-на-Дону, зум 12
+<<<<<<< HEAD
 5) Поиск производится по введеному адресу
+=======
+>>>>>>> 0317c07fa00f1575056f2eadccfca27877e68d46
