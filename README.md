@@ -3,7 +3,7 @@
 ### `npm start`
 
 Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Open [http://localhost:8080](http://localhost:3000) to view it in your browser.
 https://open-code-front.vercel.app/
 
 ### Технологии:
@@ -43,5 +43,4 @@ https://open-code-front.vercel.app/
  - Синий - Средний
  - Зеленый - Низкий
 4) Карта по дефолту отображает Ростов-на-Дону, зум 12
-<<<<<<< HEAD
 5) Поиск производится по введеному адресу
