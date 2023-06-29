@@ -31,7 +31,7 @@ const UpdateModal = ({open, handleClose, data}) => {
 
     const mapElement = React.useRef(null);
     React.useEffect(() => {
-        if (open) {
+        if (open || url.pathname) {
             const map = new Map({
                 target: mapElement.current,
                 layers: [
@@ -85,7 +85,7 @@ const UpdateModal = ({open, handleClose, data}) => {
             });
 
         }
-    }, [open]);
+    }, [open, url.pathname]);
 
     const onSubmit = (e) => {
         e.preventDefault();

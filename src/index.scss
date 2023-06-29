@@ -68,6 +68,7 @@ a:hover {
 }
 
 .home {
+  position: relative;
   &__image {
     height: 100vh;
     background: url('./images/room.png') center no-repeat;

@@ -11,6 +11,7 @@ import VectorLayer from "ol/layer/Vector";
 import {Draw} from "ol/interaction";
 import {useDispatch} from "react-redux";
 import {addStatement} from "../../redux/slices/statements";
+import {useLocation} from "react-router-dom";
 
 const CreateModal = ({open, handleClose}) => {
     const [address, setAddress] = React.useState('');
@@ -19,6 +20,8 @@ const CreateModal = ({open, handleClose}) => {
     const [phoneNumber, setPhoneNumber] = React.useState('');
     const [accidentType, setAccidentType] = React.useState('');
     const [applicant, setApplicant] = React.useState('');
+    const url = useLocation();
+    console.log(url)
 
     const [validated, setValidated] = React.useState(false);
 
@@ -26,7 +29,7 @@ const CreateModal = ({open, handleClose}) => {
 
     const mapElement = React.useRef(null);
     React.useEffect(() => {
-        if (open) {
+        if (open || url.pathname) {
             const map = new Map({
                 target: mapElement.current,
                 layers: [
@@ -60,7 +63,7 @@ const CreateModal = ({open, handleClose}) => {
                 setLocation(lonLat);
             });
         }
-    }, [open]);
+    }, [open, url.pathname]);
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -95,7 +98,7 @@ const CreateModal = ({open, handleClose}) => {
 
     return (
         <Modal
-            show={open}
+            show={url.pathname || open}
             onHide={handleClose}
             aria-labelledby="modal-modal-title"
             size={"xl"}
