@@ -19,7 +19,6 @@ const ItemList = () => {
     const startIndex = (page - 1) * 8;
     const endIndex = startIndex + 8;
     const currentData = filterStatements.slice(startIndex, endIndex);
-    console.log(pageArray)
     return (
         <>
             <ListGroup className={styles.list}>
