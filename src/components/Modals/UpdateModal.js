@@ -31,61 +31,58 @@ const UpdateModal = ({open, handleClose, data}) => {
 
     const mapElement = React.useRef(null);
     React.useEffect(() => {
-        if (open || url.pathname) {
-            const map = new Map({
-                target: mapElement.current,
-                layers: [
-                    new TileLayer({
-                        source: new OSM(),
-                    }),
-                ],
-                view: new View({
-                    center: fromLonLat([39.683536334334974, 47.22365071826664]),
-                    zoom: 12,
+        const map = new Map({
+            target: mapElement.current,
+            layers: [
+                new TileLayer({
+                    source: new OSM(),
                 }),
-            });
+            ],
+            view: new View({
+                center: fromLonLat([39.683536334334974, 47.22365071826664]),
+                zoom: 12,
+            }),
+        });
 
-            if (data.location == null) return null;
-            const markerStyle = new Style({
-                image: new CircleStyle({
-                    radius: 8,
-                    fill: new Fill({color: getColorByPriority(data.priority)}),
-                    stroke: new Stroke({
-                        color: '#fff',
-                        width: 2,
-                    }),
+        if (data.location == null) return null;
+        const markerStyle = new Style({
+            image: new CircleStyle({
+                radius: 8,
+                fill: new Fill({color: getColorByPriority(data.priority)}),
+                stroke: new Stroke({
+                    color: '#fff',
+                    width: 2,
                 }),
-            });
+            }),
+        });
 
-            const markerFeature = new Feature({
-                geometry: new Point(fromLonLat([data.location[0], data.location[1]])),
-            });
+        const markerFeature = new Feature({
+            geometry: new Point(fromLonLat([data.location[0], data.location[1]])),
+        });
 
-            markerFeature.setStyle(markerStyle);
+        markerFeature.setStyle(markerStyle);
 
-            const vectorSource = new VectorSource({
-                features: [markerFeature]
-            });
-            const vectorLayer = new VectorLayer({
-                source: vectorSource,
-            });
-            map.addLayer(vectorLayer);
+        const vectorSource = new VectorSource({
+            features: [markerFeature]
+        });
+        const vectorLayer = new VectorLayer({
+            source: vectorSource,
+        });
+        map.addLayer(vectorLayer);
 
-            const draw = new Draw({
-                source: vectorSource,
-                type: 'Point',
-            });
-            map.addInteraction(draw);
+        const draw = new Draw({
+            source: vectorSource,
+            type: 'Point',
+        });
+        map.addInteraction(draw);
 
-            draw.on('drawend', (event) => {
-                const feature = event.feature;
-                const point = feature.getGeometry().getCoordinates();
-                const lonLat = toLonLat(point);
-                setLocation(lonLat);
-            });
-
-        }
-    }, [open, url.pathname]);
+        draw.on('drawend', (event) => {
+            const feature = event.feature;
+            const point = feature.getGeometry().getCoordinates();
+            const lonLat = toLonLat(point);
+            setLocation(lonLat);
+        });
+    }, []);
 
     const onSubmit = (e) => {
         e.preventDefault();
