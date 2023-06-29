@@ -3,6 +3,7 @@ import {ListGroup, Pagination} from "react-bootstrap";
 import Item from "../Item";
 import {useSelector} from "react-redux";
 import {getTotalPages} from "../../utils/getTotalPages";
+import styles from './ItemList.module.scss'
 
 const ItemList = () => {
     const {searchValue} = useSelector(state => state.statement);
@@ -18,21 +19,25 @@ const ItemList = () => {
     const startIndex = (page - 1) * 8;
     const endIndex = startIndex + 8;
     const currentData = filterStatements.slice(startIndex, endIndex);
+    console.log(pageArray)
     return (
         <>
-            <ListGroup>
+            <ListGroup className={styles.list}>
                 {currentData.map(item => (
                     <Item key={item.id} data={item}/>
                 ))}
             </ListGroup>
 
-            <Pagination>
-                {pageArray.map(p =>
-                    <Pagination.Item onClick={() => setPage(p)} key={p} active={p === page}>
-                        {p}
-                    </Pagination.Item>
-                )}
-            </Pagination>
+            {pageArray.length === 1 ?
+                null
+                :
+                <Pagination>
+                    {pageArray.map(p =>
+                        <Pagination.Item onClick={() => setPage(p)} key={p} active={p === page}>
+                            {p}
+                        </Pagination.Item>
+                    )}
+                </Pagination>}
         </>
     );
 };

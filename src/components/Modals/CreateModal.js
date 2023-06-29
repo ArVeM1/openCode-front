@@ -21,7 +21,6 @@ const CreateModal = ({open, handleClose}) => {
     const [accidentType, setAccidentType] = React.useState('');
     const [applicant, setApplicant] = React.useState('');
     const url = useLocation();
-    console.log(url)
 
     const [validated, setValidated] = React.useState(false);
 
@@ -29,41 +28,39 @@ const CreateModal = ({open, handleClose}) => {
 
     const mapElement = React.useRef(null);
     React.useEffect(() => {
-        if (open || url.pathname) {
-            const map = new Map({
-                target: mapElement.current,
-                layers: [
-                    new TileLayer({
-                        source: new OSM(),
-                    }),
-                ],
-                view: new View({
-                    center: fromLonLat([39.683536334334974, 47.22365071826664]),
-                    zoom: 12,
+        const map = new Map({
+            target: mapElement.current,
+            layers: [
+                new TileLayer({
+                    source: new OSM(),
                 }),
-            });
+            ],
+            view: new View({
+                center: fromLonLat([39.683536334334974, 47.22365071826664]),
+                zoom: 12,
+            }),
+        });
 
-            const source = new VectorSource();
-            const layer = new VectorLayer({
-                source: source,
-            });
-            map.addLayer(layer);
+        const source = new VectorSource();
+        const layer = new VectorLayer({
+            source: source,
+        });
+        map.addLayer(layer);
 
-            const draw = new Draw({
-                source: source,
-                type: 'Point',
-            });
-            map.addInteraction(draw);
+        const draw = new Draw({
+            source: source,
+            type: 'Point',
+        });
+        map.addInteraction(draw);
 
 
-            draw.on('drawend', (event) => {
-                const feature = event.feature;
-                const point = feature.getGeometry().getCoordinates();
-                const lonLat = toLonLat(point);
-                setLocation(lonLat);
-            });
-        }
-    }, [open, url.pathname]);
+        draw.on('drawend', (event) => {
+            const feature = event.feature;
+            const point = feature.getGeometry().getCoordinates();
+            const lonLat = toLonLat(point);
+            setLocation(lonLat);
+        });
+    }, []);
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -94,6 +91,10 @@ const CreateModal = ({open, handleClose}) => {
             alert("Не задудьте выбрать локацию");
         }
         setValidated(true);
+    }
+
+    const onLocation = (coordinate) => {
+        setLocation(coordinate)
     }
 
     return (
